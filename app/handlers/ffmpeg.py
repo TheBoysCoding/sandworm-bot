@@ -36,7 +36,7 @@ async def ffmpeg_capture_photo():
 
 @dp.message_handler(commands="photo", chat_id=config.telegram.chats)
 async def command_handler_photo(message: Message):
-    notification_message = await message.answer("\N{SLEEPING SYMBOL} capturing...")
+    notification_message = await message.answer("\N{SLEEPING SYMBOL}...")
     try:
         await message.reply_photo(await ffmpeg_capture_photo())
     except Exception as ex:
@@ -49,7 +49,7 @@ async def ffmpeg_capture_video():
 
 @dp.message_handler(commands="video", chat_id=config.telegram.chats)
 async def command_handler_video(message: Message):
-    notification_message = await message.answer("\N{SLEEPING SYMBOL} capturing...")
+    notification_message = await message.answer("\N{SLEEPING SYMBOL}...")
     try:
         await message.reply_video(await ffmpeg_capture_video())
     except Exception as ex:
