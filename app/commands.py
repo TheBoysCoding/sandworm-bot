@@ -1,5 +1,5 @@
 commands = (
     ('/help',   'Print this help'),
     ('/photo',  'Capture and send photo'),
-    ('/video',  'Capture and send video (5 secs)'),
+    ('/video',  'Capture and send video'),
 )
