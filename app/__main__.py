@@ -22,6 +22,7 @@ async def send_greeting():
 
 async def start_telegram_bot() -> None:
     log.info("starting telegram bot")
+
     await dp.skip_updates()
 
     await bot.set_my_commands(
