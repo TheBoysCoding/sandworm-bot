@@ -9,8 +9,8 @@ logging.basicConfig(
 
 log = logging.getLogger(__name__)
 
-from app import handlers
 from app.config import config
+from app.handlers import *
 from app.core import bot, dp, commands, notify_message, notify_sticker
 
 async def start_telegram_bot() -> None:
