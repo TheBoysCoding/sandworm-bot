@@ -9,16 +9,9 @@ logging.basicConfig(
 
 log = logging.getLogger(__name__)
 
-from app import bot, dp, config, handlers, commands, notify_message, notify_sticker
-
-async def send_greeting():
-    greeting_sticker = config.stickers.get('greeting', None)
-
-    for chat_id in get_notify_chats():
-        if sticker is not None:
-            await bot.send_sticker(chat_id, sticker=greeting_sticker)
-        else:
-            await bot.send_message(chat_id, "\N{Robot Face} bot online")
+from app import handlers
+from app.config import config
+from app.core import bot, dp, commands, notify_message, notify_sticker
 
 async def start_telegram_bot() -> None:
     log.info("starting telegram bot")

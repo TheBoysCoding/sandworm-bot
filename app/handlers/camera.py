@@ -3,7 +3,8 @@ import logging
 
 from aiogram.types import Message
 
-from app import dp, config
+from app.core import dp
+from app.config import config
 from app.misc import Camera
 
 log = logging.getLogger(__name__)
