@@ -3,7 +3,7 @@ import logging
 
 class Camera:
     def __init__(self, *, device: str = None,  loop: asyncio.AbstractEventLoop = None):
-        self._log = logging.getLogger(__name__)
+        self._logger = logging.getLogger(__name__)
         self._device = device
         self._loop = loop or asyncio.get_event_loop()
         self._lock = asyncio.Lock()
@@ -30,7 +30,7 @@ class Camera:
             stdout, stderr = await process.communicate()
 
             if process.returncode != 0:
-                self._log.error(f"ffmpeg spawn error ({cmd})")
+                self._logger.error(f"ffmpeg spawn error ({cmd})")
                 raise RuntimeError(f"capture process return error {process.returncode}")
 
             return stdout

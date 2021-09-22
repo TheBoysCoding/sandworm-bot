@@ -7,7 +7,7 @@ from aiogram.types import Message
 from app.config import config
 from app.misc.camera import Camera
 
-log = logging.getLogger(__name__)
+logger = logging.getLogger(__name__)
 camera = Camera(device=config.camera.device)
 
 async def cmd_photo(message: Message):
@@ -16,7 +16,7 @@ async def cmd_photo(message: Message):
         await message.reply_photo(await camera.capture_photo())
     except Exception as ex:
         await message.reply(f"\N{Heavy Ballot X} failed to capture photo ({ex})")
-        log.exception(f"exception during process message {message}")
+        logger.exception(f"exception during process message {message}")
     finally:
         await notification_message.delete()
 
@@ -39,7 +39,7 @@ async def cmd_video(message: Message):
         await message.reply_video(await camera.capture_video(duration))
     except Exception as ex:
         await message.reply(f"\N{Heavy Ballot X} failed to capture video ({ex})")
-        log.exception(f"exception during process message {message}")
+        logger.exception(f"exception during process message {message}")
     finally:
         await notification_message.delete()
 

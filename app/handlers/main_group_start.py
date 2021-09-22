@@ -1,12 +1,9 @@
 import asyncio
-import logging
 
 from aiogram import Dispatcher, Bot
 from aiogram.types import Message, BotCommand
 
 from app.config import config
-
-log = logging.getLogger(__name__)
 
 bot_commands = (
     ('/help',   'Print this help'),
