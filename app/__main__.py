@@ -14,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 from app.handlers.main_group_start import register_main_group_start, set_bot_commands
 from app.handlers.main_group_camera import register_main_group_camera
+from app.handlers.main_group_voice import register_main_group_voice
 
 def get_notify_chats():
     yield from config.telegram.chats
@@ -39,6 +40,7 @@ async def main() -> None:
     # register handlers
     register_main_group_start(dp)
     register_main_group_camera(dp)
+    register_main_group_voice(dp)
 
     # set /-commands in ui
     await set_bot_commands(dp.bot)

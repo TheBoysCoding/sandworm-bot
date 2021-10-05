@@ -1,4 +1,3 @@
-import asyncio
 import logging
 
 from aiogram import Dispatcher
@@ -46,4 +45,3 @@ async def cmd_video(message: Message):
 def register_main_group_camera(dp: Dispatcher):
     dp.register_message_handler(cmd_photo, commands="photo", chat_id=config.telegram.chats)
     dp.register_message_handler(cmd_video, commands="video", chat_id=config.telegram.chats)
-

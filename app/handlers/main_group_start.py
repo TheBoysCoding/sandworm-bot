@@ -1,5 +1,3 @@
-import asyncio
-
 from aiogram import Dispatcher, Bot
 from aiogram.types import Message, BotCommand
 
@@ -9,6 +7,7 @@ bot_commands = (
     ('/help',   'Print this help'),
     ('/photo',  'Capture and send photo'),
     ('/video',  'Capture and send video'),
+    ('/voice',  'Text to speech'),
 )
 
 async def cmd_help(message: Message):
