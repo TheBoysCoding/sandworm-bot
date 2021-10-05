@@ -7,12 +7,12 @@ from aiogram import Bot, Dispatcher
 from app.config import config
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG
 )
 
 logger = logging.getLogger(__name__)
 
-from app.handlers.main_group_start import register_main_group_start, register_bot_commands
+from app.handlers.main_group_start import register_main_group_start, set_bot_commands
 from app.handlers.main_group_camera import register_main_group_camera
 
 def get_notify_chats():
@@ -40,8 +40,8 @@ async def main() -> None:
     register_main_group_start(dp)
     register_main_group_camera(dp)
 
-    # register /-commands in ui
-    await register_bot_commands(dp.bot)
+    # set /-commands in ui
+    await set_bot_commands(dp.bot)
 
     logger.info("starting bot")
 

@@ -18,7 +18,7 @@ async def cmd_help(message: Message):
 def register_main_group_start(dp: Dispatcher):
     dp.register_message_handler(cmd_help, commands=["start", "help"], chat_id=config.telegram.chats)
 
-async def register_bot_commands(bot: Bot):
+async def set_bot_commands(bot: Bot):
     await bot.set_my_commands(
         [BotCommand(command=command, description=description) for command, description in bot_commands]
     )
