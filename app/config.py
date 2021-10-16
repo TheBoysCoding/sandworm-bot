@@ -2,13 +2,14 @@ __all__ = ("config")
 
 from configparser import ConfigParser
 from dataclasses import dataclass
+from typing import List, Dict
 
 from .args import args
 
 @dataclass
 class TelegramConfig:
     token: str
-    chats: list[int] = None
+    chats: List[int] = None
 
 @dataclass
 class CameraConfig:
@@ -18,9 +19,9 @@ class CameraConfig:
 class Config:
     telegram: TelegramConfig
     camera: CameraConfig
-    stickers: dict[str, str]
+    stickers: Dict[str, str]
 
-def parse_chats(value: str) -> list[int]:
+def parse_chats(value: str) -> List[int]:
     if str is None:
         return None
     return [int(chat_id) for chat_id in value.split(', ')]
