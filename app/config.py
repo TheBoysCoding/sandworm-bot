@@ -12,17 +12,12 @@ class TelegramConfig:
     chats: List[int] = None
 
 @dataclass
-class CameraConfig:
-    device: str = None
-
-@dataclass
 class JPEGStream:
     base: str = None
 
 @dataclass
 class Config:
     telegram: TelegramConfig
-    camera: CameraConfig
     jpeg_stream: JPEGStream
     stickers: Dict[str, str]
 
@@ -39,9 +34,6 @@ def load_config() -> Config:
         telegram = TelegramConfig(
             token = parser.get("telegram", "token"),
             chats = parse_chats(parser.get("telegram", "chats", fallback=None))
-        ),
-        camera = CameraConfig(
-            device = parser.get("camera", "device", fallback=None)
         ),
         jpeg_stream = JPEGStream(
             base = parser.get("jpeg_stream", "base", fallback=None)

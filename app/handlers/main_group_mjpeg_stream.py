@@ -3,8 +3,10 @@ import logging
 from aiogram import Dispatcher
 from aiogram.types import Message
 from aiohttp import ClientSession
+from typing import List
 
 from app.config import config
+from app.misc.command_description import CommandDescription
 
 logger = logging.getLogger(__name__)
 
@@ -20,5 +22,11 @@ async def cmd_mjpeg_stream_photo(message: Message):
     finally:
         await notification_message.delete()
 
-def register_main_group_mjpeg_stream(dp: Dispatcher):
-    dp.register_message_handler(cmd_mjpeg_stream_photo, commands="photo2", chat_id=config.telegram.chats)
+def register_main_group_mjpeg_stream(storage: List[CommandDescription]) -> None:
+    storage.append(
+        CommandDescription(
+            command = "photo",
+            description = "capture and send a photo",
+            func = cmd_mjpeg_stream_photo
+        )
+    )

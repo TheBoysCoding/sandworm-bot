@@ -1,19 +1,18 @@
 import logging
 import asyncio
 
-from aiogram.types import ParseMode, Message
+from aiogram.types import ParseMode, Message, BotCommand
 from aiogram import Bot, Dispatcher
 
 from app.config import config
 
 logging.basicConfig(
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO
 )
 
 logger = logging.getLogger(__name__)
 
-from app.handlers.main_group_start import register_main_group_start, set_bot_commands
-from app.handlers.main_group_camera import register_main_group_camera
+from app.handlers.main_group_start import register_main_group_start
 from app.handlers.main_group_mjpeg_stream import register_main_group_mjpeg_stream
 
 def get_notify_chats():
@@ -37,13 +36,20 @@ async def main() -> None:
     bot = Bot(token=config.telegram.token, parse_mode=ParseMode.HTML)
     dp = Dispatcher(bot)
 
-    # register handlers
-    register_main_group_start(dp)
-    register_main_group_camera(dp)
-    register_main_group_mjpeg_stream(dp)
+    commands = []
+
+    # register commands
+    register_main_group_mjpeg_stream(commands)
+    register_main_group_start(commands)
+
+    # make commands available for bot
+    for command in commands:
+        dp.register_message_handler(command.func, commands=command.command, chat_id=config.telegram.chats)
 
     # set /-commands in ui
-    await set_bot_commands(dp.bot)
+    await bot.set_my_commands(
+        [BotCommand(command=command.command, description=command.description) for command in commands]
+    )
 
     logger.info("starting bot")
 
