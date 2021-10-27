@@ -13,12 +13,17 @@ class TelegramConfig:
 
 @dataclass
 class JPEGStream:
-    base: str = None
+    url: str = None
+
+@dataclass
+class Moonraker:
+    url: str = None
 
 @dataclass
 class Config:
     telegram: TelegramConfig
     jpeg_stream: JPEGStream
+    moonraker: Moonraker
     stickers: Dict[str, str]
 
 def parse_chats(value: str) -> List[int]:
@@ -36,7 +41,10 @@ def load_config() -> Config:
             chats = parse_chats(parser.get("telegram", "chats", fallback=None))
         ),
         jpeg_stream = JPEGStream(
-            base = parser.get("jpeg_stream", "base", fallback=None)
+            url = parser.get("jpeg_stream", "url", fallback=None)
+        ),
+        moonraker = Moonraker(
+            url = parser.get("moonraker", "url", fallback=None)
         ),
         stickers = {
             key: value for key, value in parser.items("stickers")

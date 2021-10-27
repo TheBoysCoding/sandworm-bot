@@ -71,5 +71,7 @@ async def main() -> None:
 if __name__ == '__main__':
     try:
         asyncio.run(main())
+        # loop = asyncio.get_event_loop()
+        # loop.run_until_complete(asyncio.gather(*[main(), moonraker.run()]))
     except (KeyboardInterrupt, SystemExit):
         logger.error("bot stopped!")
