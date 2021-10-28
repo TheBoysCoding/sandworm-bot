@@ -10,7 +10,7 @@ from app.misc.command_description import CommandDescription
 
 logger = logging.getLogger(__name__)
 
-async def cmd_mjpeg_stream_photo(message: Message):
+async def cmd_mjpg_photo(message: Message):
     notification_message = await message.answer("\N{SLEEPING SYMBOL}...")
     try:
         async with ClientSession() as session:
@@ -22,11 +22,11 @@ async def cmd_mjpeg_stream_photo(message: Message):
     finally:
         await notification_message.delete()
 
-def register_main_group_mjpeg_stream(storage: List[CommandDescription]) -> None:
+def register_main_group_mjpg(storage: List[CommandDescription]) -> None:
     storage.append(
         CommandDescription(
             command = "photo",
             description = "capture and send a photo",
-            func = cmd_mjpeg_stream_photo
+            func = cmd_mjpg_photo
         )
     )

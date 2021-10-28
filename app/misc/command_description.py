@@ -5,4 +5,4 @@ from collections.abc import Callable
 class CommandDescription:
     command: str
     description: str
-    func: Callable
+    func: Callable = None

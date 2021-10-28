@@ -13,7 +13,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 from app.handlers.main_group_start import register_main_group_start
-from app.handlers.main_group_mjpeg_stream import register_main_group_mjpeg_stream
+from app.handlers.main_group_mjpg import register_main_group_mjpg
 
 def get_notify_chats():
     yield from config.telegram.chats
@@ -30,7 +30,7 @@ async def send_greeting(bot: Bot) -> None:
         except:
             logger.exception(f"failed to send message to chat_id={chat_id}")
 
-async def main() -> None:
+async def run_bot() -> None:
     logger.info(f"config:\n{config}")
 
     bot = Bot(token=config.telegram.token, parse_mode=ParseMode.HTML)
@@ -39,7 +39,7 @@ async def main() -> None:
     commands = []
 
     # register commands
-    register_main_group_mjpeg_stream(commands)
+    register_main_group_mjpg(commands)
     register_main_group_start(commands)
 
     # make commands available for bot
@@ -68,10 +68,12 @@ async def main() -> None:
         await bot.session.close()
         logger.info("done")
 
+async def main() -> None:
+    tasks = [run_bot()]
+    await asyncio.gather(*tasks)
+
 if __name__ == '__main__':
     try:
         asyncio.run(main())
-        # loop = asyncio.get_event_loop()
-        # loop.run_until_complete(asyncio.gather(*[main(), moonraker.run()]))
     except (KeyboardInterrupt, SystemExit):
         logger.error("bot stopped!")
