@@ -13,7 +13,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 from app.handlers.main_group_start import register_main_group_start
-from app.handlers.main_group_mjpg import register_main_group_mjpg
+#from app.handlers.main_group_mjpg import register_main_group_mjpg
+#from app.handlers.main_group_moonraker import register_main_group_moonraker
+from app.handlers.main_group_status import register_main_group_status
 
 def get_notify_chats():
     yield from config.telegram.chats
@@ -39,7 +41,7 @@ async def run_bot() -> None:
     commands = []
 
     # register commands
-    register_main_group_mjpg(commands)
+    register_main_group_status(commands)
     register_main_group_start(commands)
 
     # make commands available for bot
