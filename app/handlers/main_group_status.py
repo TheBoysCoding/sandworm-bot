@@ -3,6 +3,7 @@ import asyncio
 import aiohttp
 import json
 
+from typing import List
 from aiogram.types import Message, BotCommand
 
 from app.config import config
@@ -53,7 +54,7 @@ async def cmd_status(message: Message):
     finally:
         await notification_message.delete()
 
-def register_main_group_status(storage: list[CommandDescription]):
+def register_main_group_status(storage: List[CommandDescription]):
     # Start moonraker service
     asyncio.ensure_future(moonraker.run())
 
