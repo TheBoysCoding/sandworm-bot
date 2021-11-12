@@ -6,13 +6,12 @@ SYSTEMD_SERVICE_PATH="${HOME}/.config/systemd/user"
 
 mkdir -p "${SYSTEMD_SERVICE_PATH}"
 cat > "${SYSTEMD_SERVICE_PATH}/sandworm-bot.service" << EOF
-#Systemd service file for Moonraker Telegram Bot
 [Unit]
-Description=Moonraker Telegram Bot
-After=network-online.target moonraker.service
+Description=Sandworm telegram bot for Moonraker service
+After=network-online.target
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=default.target
 
 [Service]
 Type=simple
@@ -24,6 +23,21 @@ StandardOutput=journal
 EOF
 
 if [ ! -f "${CONFIG_PATH}" ]; then
-  echo "Config sample copied to ${CONFIG_PATH}"
   cp "${BOT_PATH}/sandworm.conf" "${CONFIG_PATH}"
 fi
+
+cat << EOF
+config location
+  "${CONFIG_PATH}"
+
+systemd service location
+  "${SYSTEMD_SERVICE_PATH}/sandworm-bot.service"
+
+execute:
+
+  $ systemctl --user daemon-reload
+  $ sustemctl --user enable sandworm-bot.service
+  $ sustemctl --user start sandworm-bot.service
+  $ loginctl enable-linger ${USER}
+
+EOF
