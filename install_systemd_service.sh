@@ -36,8 +36,8 @@ systemd service location
 execute:
 
   $ systemctl --user daemon-reload
-  $ sustemctl --user enable sandworm-bot.service
-  $ sustemctl --user start sandworm-bot.service
+  $ systemctl --user enable sandworm-bot.service
+  $ systemctl --user start sandworm-bot.service
   $ loginctl enable-linger ${USER}
 
 EOF
