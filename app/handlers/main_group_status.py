@@ -34,6 +34,7 @@ async def cmd_status(message: Message):
             }
         })
 
+        state = data["status"]["print_stats"]["state"]
         extruder_temperature = data["status"]["extruder"]["temperature"]
         extruder_target = data["status"]["extruder"]["target"]
         bed_temperature = data["status"]["heater_bed"]["temperature"]
@@ -42,12 +43,23 @@ async def cmd_status(message: Message):
         progress = data["status"]["display_status"]["progress"]
 
         caption = \
-            f"\N{Memo} "           f"<code>file: {filename}</code>\n" \
-            f"\N{Thermometer} "    f"<code>extruder: {extruder_temperature} ({extruder_target})</code>\n" \
-            f"\N{Thermometer} "    f"<code>bed: {bed_temperature} ({bed_target})</code>\n" \
-            f"\N{Chequered Flag} " f"<code>progress: {int(progress * 100)}%</code>"
+            f"\N{Weary Cat Face} " f"<code>{state}</code>\n"
+
+        if int(extruder_temperature) > 0:
+            caption += \
+                f"\N{Thermometer} "    f"<code>extruder: {extruder_temperature} ({extruder_target})</code>\n" \
+
+        if int(bed_temperature) > 0:
+            caption += \
+                f"\N{Thermometer} "    f"<code>bed: {bed_temperature} ({bed_target})</code>\n" \
+
+        if state == "printing":
+            caption += \
+                f"\N{Memo} "           f"<code>file: {filename}</code>\n" \
+                f"\N{Chequered Flag} " f"<code>progress: {int(progress * 100)}%</code>\n"
 
         await message.reply_photo(photo, caption=caption)
+
     except Exception as ex:
         await message.reply(f"\N{Heavy Ballot X} failed to capture photo ({ex})")
         logger.exception(f"exception during process message {message}")
